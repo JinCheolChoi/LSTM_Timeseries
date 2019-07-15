@@ -6,6 +6,7 @@ from sklearn.preprocessing import MinMaxScaler
 from keras.models import Sequential
 from keras.layers import Dense, LSTM, Dropout, GRU, Bidirectional
 from keras.optimizers import SGD
+import keras
 import math
 from sklearn.metrics import mean_squared_error
 
@@ -79,6 +80,20 @@ regressor.add(LSTM(units=50))
 regressor.add(Dropout(0.2))
 # The output layer
 regressor.add(Dense(units=1))
+# ===================== Another way to build layers ===========================
+# model = keras.Sequential([
+#     # First LSTM layer with Dropout regularisation
+#     keras.layers.LSTM(units=50, return_sequences=True, input_shape=(X_train.shape[1],1)),
+#     keras.layers.Dropout(0.2),
+#     keras.layers.LSTM(units=50, return_sequences=True),
+#     keras.layers.Dropout(0.2),
+#     keras.layers.LSTM(units=50, return_sequences=True),
+#     keras.layers.Dropout(0.2),
+#     
+#     # The output layer
+#     keras.layers.Dense(units=1)
+# ])
+# =============================================================================
 
 # Compiling the RNN
 regressor.compile(optimizer='rmsprop', loss='mean_squared_error')
