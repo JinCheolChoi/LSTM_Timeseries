@@ -1,14 +1,22 @@
+# Clear the workspace
+# ===============================
+#from IPython import get_ipython
+#get_ipython().magic('reset -sf')
+# ===============================
+
 import numpy as np
 import matplotlib.pyplot as plt
 plt.style.use('fivethirtyeight')
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
-from keras.models import Sequential
-from keras.layers import Dense, LSTM, Dropout, GRU, Bidirectional
-from keras.optimizers import SGD
-import keras
+#from keras.models import Sequential
+from tensorflow.keras import layers
+#from keras.layers import Dense, LSTM, Dropout, GRU, Bidirectional
+#from keras.optimizers import SGD
+#import keras
 import math
 from sklearn.metrics import mean_squared_error
+import tensorflow as tf
 
 # Some functions to help out with
 def plot_predictions(test,predicted):
@@ -65,21 +73,21 @@ X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
 
 
 # The LSTM architecture
-regressor = Sequential()
+regressor = tf.keras.Sequential()
 # First LSTM layer with Dropout regularisation
-regressor.add(LSTM(units=50, return_sequences=True, input_shape=(X_train.shape[1],1)))
-regressor.add(Dropout(0.2))
+regressor.add(layers.LSTM(units=50, return_sequences=True, input_shape=(X_train.shape[1],1)))
+regressor.add(layers.Dropout(0.2))
 # Second LSTM layer
-regressor.add(LSTM(units=50, return_sequences=True))
-regressor.add(Dropout(0.2))
+regressor.add(layers.LSTM(units=50, return_sequences=True))
+regressor.add(layers.Dropout(0.2))
 # Third LSTM layer
-regressor.add(LSTM(units=50, return_sequences=True))
-regressor.add(Dropout(0.2))
+regressor.add(layers.LSTM(units=50, return_sequences=True))
+regressor.add(layers.Dropout(0.2))
 # Fourth LSTM layer
-regressor.add(LSTM(units=50))
-regressor.add(Dropout(0.2))
+regressor.add(layers.LSTM(units=50))
+regressor.add(layers.Dropout(0.2))
 # The output layer
-regressor.add(Dense(units=1))
+regressor.add(layers.Dense(units=1))
 
 # ===================== Another way to build layers ===========================
 # model = keras.Sequential([
